@@ -34,3 +34,5 @@ class Payment(models.Model):
 				self.ref = ref
 
 		super().save(*args, **kwargs)
+	
+	
