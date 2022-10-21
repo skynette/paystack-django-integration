@@ -21,3 +21,15 @@ def initiate_payment(request):
 		return render(request, 'make_payment.html', context)
 
 	return render(request, 'payment.html')
+
+
+def verify_payment(request, ref):
+	payment = Payment.objects.get(ref=ref)
+	verified = payment.verify_payment()
+	ver = Payment.objects.filter(user=request.user)
+	for txn in ver:
+		if txn.verified:
+			print(request.user.username, " funded wallet successfully")
+	if verified:
+		print("txn already verified")
+	return redirect('/')

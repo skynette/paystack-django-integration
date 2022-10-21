@@ -120,3 +120,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+PAYSTACK_SECRET_KEY = "sk_test_f6b61226abac38853fb07dc84cca3d968f03cbda"
+PAYSTACK_PUBLIC_KEY = "pk_test_b5bbac18595837d0f90896509f8e389f5c79b74e"

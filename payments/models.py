@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 import secrets
+from .paystack import Paystack
 
 # Create your models here.
 class UserWallet(models.Model):
@@ -35,4 +36,17 @@ class Payment(models.Model):
 
 		super().save(*args, **kwargs)
 	
+	def amount_value(self):
+		return int(self.amount) * 100
+
+	def verify_payment(self):
+		paystack = Paystack()
+		status, result = paystack.verify_payment(self.ref, self.amount)
+		if status:
+			if result['amount'] / 100 == self.amount:
+				self.verified = True
+			self.save()
+		if self.verified:
+			return True
+		return False
 	
