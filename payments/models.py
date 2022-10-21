@@ -6,12 +6,13 @@ from .paystack import Paystack
 
 # Create your models here.
 class UserWallet(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    currency = models.CharField(max_length=50, default='NGN')
-    created_at = models.DateTimeField(default=timezone.now, null=True)
+	user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+	currency = models.CharField(max_length=50, default='NGN')
+	balance = models.PositiveIntegerField(default=0)
+	created_at = models.DateTimeField(default=timezone.now, null=True)
 
-    def __str__(self):
-        return self.user.__str__()
+	def __str__(self):
+		return self.user.__str__()
 
 class Payment(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)

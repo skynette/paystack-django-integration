@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Payment
+from .models import Payment, UserWallet
 from django.conf import settings
 
 def initiate_payment(request):
@@ -29,7 +29,10 @@ def verify_payment(request, ref):
 	ver = Payment.objects.filter(user=request.user)
 	for txn in ver:
 		if txn.verified:
+			user_wallet = UserWallet.objects.get(user=request.user)
+			user_wallet.balance += txn.amount
 			print(request.user.username, " funded wallet successfully")
+			return render(request, "success.html")
 	if verified:
-		print("txn already verified")
-	return redirect('/')
+		message = "txn already verified"
+		return render(request, "success.html", message)
