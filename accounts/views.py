@@ -9,7 +9,7 @@ def register(request):
 	if request.method == "POST":
 		username = request.POST['username']
 		password = request.POST['password']
-		user = User.objects.create(username=username, password=password)
+		user = User.objects.create_user(username=username, password=password)
 		UserWallet.objects.create(user=user)
 		return redirect('login')
 	return render(request, "register.html")
@@ -22,8 +22,10 @@ def login_view(request):
 		user = authenticate(username=username, password=password)
 		if user is not None:
 			login(request, user)
+			print('login successful')
 			return redirect('initiate_payment')
 		else:
+			print('error')
 			return redirect('login')
 		
 	return render(request, 'login.html')
