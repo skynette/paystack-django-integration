@@ -8,6 +8,7 @@
     
     <section class="w-100 p-4 d-flex justify-content-center pb-4">
       <form style="width: 22rem;" action="{% url 'initiate_payment' %}" method="POST">
+        <h2>Fund your wallet</h2>
 		{% csrf_token %}
         <!-- Email input -->
         <div class="form-outline mb-4">

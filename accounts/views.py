@@ -22,10 +22,8 @@ def login_view(request):
 		user = authenticate(username=username, password=password)
 		if user is not None:
 			login(request, user)
-			print('login successful')
 			return redirect('initiate_payment')
 		else:
-			print('error')
 			return redirect('login')
 		
 	return render(request, 'login.html')

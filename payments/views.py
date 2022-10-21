@@ -31,6 +31,7 @@ def verify_payment(request, ref):
 		if txn.verified:
 			user_wallet = UserWallet.objects.get(user=request.user)
 			user_wallet.balance += txn.amount
+			user_wallet.save()
 			print(request.user.username, " funded wallet successfully")
 			return render(request, "success.html")
 	if verified:
