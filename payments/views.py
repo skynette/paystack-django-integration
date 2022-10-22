@@ -26,14 +26,11 @@ def initiate_payment(request):
 def verify_payment(request, ref):
 	payment = Payment.objects.get(ref=ref)
 	verified = payment.verify_payment()
-	ver = Payment.objects.filter(user=request.user)
-	for txn in ver:
-		if txn.verified:
-			user_wallet = UserWallet.objects.get(user=request.user)
-			user_wallet.balance += txn.amount
-			user_wallet.save()
-			print(request.user.username, " funded wallet successfully")
-			return render(request, "success.html")
+
 	if verified:
-		message = "txn already verified"
-		return render(request, "success.html", message)
+		user_wallet = UserWallet.objects.get(user=request.user)
+		user_wallet.balance += payment.amount
+		user_wallet.save()
+		print(request.user.username, " funded wallet successfully")
+		return render(request, "success.html")
+	return render(request, "success.html")
